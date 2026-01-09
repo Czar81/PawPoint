@@ -1,0 +1,9 @@
+# Environment
+.env
+.venv
+notes.md
+
+# Python
+*.pyc
+__pycache__/
+*.so
