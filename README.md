@@ -132,4 +132,4 @@ python -m pytest
 
 ## Advanced documentation
 
-To see the full documentation of the project look [here](./docs/index.md)
+To see the full documentation of the project look [here](https://github.com/Czar81/PawPoint/wiki)
