@@ -1,30 +1,32 @@
 import pytest
 
 def test_create_user(db_user_manager):
-    username = "Ian"
+    name = "Anakin"
+    email = "AnakinSkywalker@gmail.com"
     password = "2NFD9JDFI4324NJF20"
     result_expected = 1
 
-    id_user = db_user_manager.insert_data(username, password)
+    id_user = db_user_manager.insert_data(name, email, password)
 
     assert id_user == result_expected
 
 
 def test_create_admin(db_user_manager):
-    username = "Czar"
+    name = "Czar"
+    email = "Czar@gmail.com"
     password = "2NFD9JDsdaFI4324NJF20"
     role = "admin"
 
     result_expected = 1
 
-    id_user = db_user_manager.insert_data(username, password, role)
+    id_user = db_user_manager.insert_data(name, email, password, role)
 
     assert id_user == result_expected
 
 
 def test_get_users(db_user_manager, base_user):
     result_expected = [
-        {"id": 1, "username": "TestUser", "password": "12345", "role":"user"}
+        {"id": 1, "name": "TestUser", "email":"TestUser@gmail.com", "password": "12345", "role":"user"}
     ]
 
     users = db_user_manager.get_data()
@@ -33,11 +35,11 @@ def test_get_users(db_user_manager, base_user):
 
 
 def test_login(db_user_manager, base_user):
-    username="TestUser"
+    email="TestUser@gmail.com"
     password="12345"
     result_expected = 1
 
-    me = db_user_manager.get_user(username, password)
+    me = db_user_manager.get_user(email, password)
 
     assert me == result_expected
 
@@ -51,21 +53,22 @@ def test_get_role(db_user_manager, base_user):
 
 
 def test_update_all_args_user(db_user_manager, base_user):
-    username = "Claro"
+    name = "Claro"
+    email = "TestUser@gmail.com"
     password = "e4d909c290d0fb1ca068ffaddf22cbd0"
     role = "vendor"
     result_expected = True
 
-    result = db_user_manager.update_data(base_user, username, password, role)
+    result = db_user_manager.update_data(id=base_user, name, email, password, role)
 
     assert result == result_expected
 
 
-def test_update_one_args_user(db_user_manager,base_user):
-    new_username = "Nutrisource"
+def test_update_one_args_user(db_user_manager, base_user):
+    new_name = "Nutrisource"
     result_expected = True
 
-    result = db_user_manager.update_data(base_user, new_username)
+    result = db_user_manager.update_data(base_user, new_name)
 
     assert result == result_expected
 

@@ -30,7 +30,7 @@ def client():
 @pytest.fixture
 def get_token_user(client):
     response = client.post(
-        "/register", json={"username": "TestUser", "password": "12345"}
+        "/register", json={"name": "TestUser", "email": "TestUser@gmail.com", "password": "12345"}
     )
     return response.json["token"]
 
@@ -39,7 +39,7 @@ def get_token_user(client):
 def get_token_admin(client):
     response = client.post(
         "/register",
-        json={"username": "admin232", "password": "fds67tf67dstf67sdf687sd"},
+        json={"name": "admin232", "email": "admin@gmail.com", "password": "fds67tf67dstf67sdf687sd"},
         headers={"X-ADMIN-TOKEN": getenv("ADMIN_BOOTSTRAP_TOKEN")},
     )
     return response.json["token"]

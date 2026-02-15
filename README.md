@@ -1,4 +1,4 @@
-# PawPoint – Essentials & Care
+# PawStore – Essentials & Care
 
 ## Index
 
@@ -9,9 +9,9 @@
 - [How to run the unit testing](#how-to-run-the-unit-testing)
 - [Advanced Documentation](#advanced-documentation)
 
-## What PawPoint is?
+## What PawStore is?
 
-PawPoint is a modular system for managing pet products and veterinary services. It uses an API-driven architecture that centralizes inventory control, user management, and service operations. The platform integrates a relational database for data persistence and Redis as a caching and performance optimization layer, enabling faster operations, scalability, and efficient communication between modules.
+PawStore is a modular system for managing pet products and veterinary services. It uses an API-driven architecture that centralizes inventory control, user management, and service operations. The platform integrates a relational database for data persistence and Redis as a caching and performance optimization layer, enabling faster operations, scalability, and efficient communication between modules.
 
 ## Key Features
 
@@ -86,7 +86,7 @@ PawPoint is a modular system for managing pet products and veterinary services. 
 
    - API:
 
-     - Specify the host and port for the API (examples: _localhost, 192.168.1.100, api.pawpoint_).
+     - Specify the host and port for the API (examples: _localhost, 192.168.1.100, api.pawStore_).
 
      - Set _DEBUG_MODE=false_ in production.
 
@@ -132,4 +132,4 @@ python -m pytest
 
 ## Advanced documentation
 
-To see the full documentation of the project look [here](https://github.com/Czar81/PawPoint/wiki)
+To see the full documentation of the project look [here](https://github.com/Czar81/PawStore/wiki)

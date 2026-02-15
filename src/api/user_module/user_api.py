@@ -15,8 +15,8 @@ register_error_handlers(user_bp)
 
 
 @user_bp.route("/register", methods=["POST"])
-@validate_fields(required=["username", "password"])
-def register(username, password):
+@validate_fields(required=["name", "password"])
+def register(name, email, password):
     """
     Register a new user.
     If a valid X-ADMIN-TOKEN is provided, the user is created as admin.
@@ -27,7 +27,7 @@ def register(username, password):
     if x_admin_token == getenv("ADMIN_BOOTSTRAP_TOKEN"):
         role = "admin"
 
-    id_user = db_user_manager.insert_data(username, password, role=role)
+    id_user = db_user_manager.insert_data(name, email, password, role=role)
     id_cart = db_cart_manager.insert_data(id_user)
     token = jwt_manager.encode({"id": id_user})
 
@@ -35,12 +35,12 @@ def register(username, password):
 
 
 @user_bp.route("/login", methods=["POST"])
-@validate_fields(required=["username", "password"])
-def login(username, password):
+@validate_fields(required=["name", "password"])
+def login(email, password):
     """
     Authenticate a user and return a JWT token.
     """
-    id_user = db_user_manager.get_user(username, password)
+    id_user = db_user_manager.get_user(email, password)
     if id_user is None:
         return jsonify(message="User not found, register first"), 404
     token = jwt_manager.encode({"id": id_user})
@@ -69,19 +69,20 @@ def get_users(id_user, role):
 
 @user_bp.route("/me", methods=["PUT"])
 @role_required(["admin", "user"])
-@validate_fields(optional=["username", "password"])
+@validate_fields(optional=["name", "email", "password"])
 def update_profile(
     id_user,
     role,
-    username: str | None = None,
+    name: str | None = None,
+    email: str | None= None,
     password: str | None = None,
     new_role: str | None = None,
 ):
     """
     Update the authenticated user's profile.
-    Allows updating username and/or password.
+    Allows updating name, email and/or password.
     """
-    db_user_manager.update_data(id_user, username, password)
+    db_user_manager.update_data(id_user, name, email,  password)
     return jsonify({"message": "User updated"}), 200
 
 

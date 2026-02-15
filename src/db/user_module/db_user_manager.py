@@ -19,7 +19,7 @@ class DbUserManager:
         self.user_table = TablesManager.user_table
         self.engine = TablesManager.engine
 
-    def insert_data(self, username: str, password: str, role: str | None = None):
+    def insert_data(self, name: str, email: str, password: str, role: str | None = None):
         """
         Create a new user in the database.
 
@@ -53,17 +53,17 @@ class DbUserManager:
                 return "Not users found"
             return [dict(row) for row in result]
 
-    def get_user(self, username: str, password: str):
+    def get_user(self, email: str, password: str):
         """
         Retrieve a user ID using credentials.
 
-        :param username: User's username
+        :param email: User's email
         :param password: User's password
         :return: User ID if found, otherwise None
         """
         stmt = (
             select(self.user_table)
-            .where(self.user_table.c.username == username)
+            .where(self.user_table.c.email == email)
             .where(self.user_table.c.password == password)
         )
         with self.engine.connect() as conn:
@@ -88,7 +88,7 @@ class DbUserManager:
     def update_data(
         self,
         id_user: int,
-        username: str | None = None,
+        email: str | None = None,
         password: str | None = None,
         role: str | None = None,
     ):
@@ -96,7 +96,7 @@ class DbUserManager:
         Update user data.
 
         :param id_user: User ID
-        :param username: New username (optional)
+        :param email: New email (optional)
         :param password: New password (optional)
         :param role: New role (optional)
         :return: True if updated successfully

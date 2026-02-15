@@ -34,20 +34,20 @@ def clean_db():
 
 @pytest.fixture
 def base_user(db_user_manager):
-    id_user = db_user_manager.insert_data("TestUser", "12345", "user")
+    id_user = db_user_manager.insert_data("TestUser", "TestUser@gmail.com", "12345", "user")
     return id_user
 
 
 @pytest.fixture
 def base_payment(db_user_manager, db_payment_manager):
-    id_user = db_user_manager.insert_data("TestUser", "12345", "user")
+    id_user = db_user_manager.insert_data("TestUser", "TestUser@gmail.com", "12345", "user")
     id_payment = db_payment_manager.insert_data(id_user, "card", "data_payment")
     return id_payment
 
 
 @pytest.fixture
 def base_address(db_user_manager, db_address_manager):
-    id_user = db_user_manager.insert_data("TestUser", "12345", "user")
+    id_user = db_user_manager.insert_data("TestUser", "TestUser@gmail.com", "12345", "user")
     id_address = db_address_manager.insert_data(id_user, "9 Oak Valley Avenue")
     return id_address
 
@@ -62,7 +62,7 @@ def base_product(db_product_manager):
 
 @pytest.fixture
 def base_cart(db_user_manager, db_cart_manager):
-    id_user = db_user_manager.insert_data("TestUser", "12345", "user")
+    id_user = db_user_manager.insert_data("TestUser", "TestUser@gmail.com", "12345", "user")
     id_cart = db_cart_manager.insert_data(id_user)
     return id_cart
 
@@ -71,7 +71,7 @@ def base_cart(db_user_manager, db_cart_manager):
 def base_cart_item(
     request, db_cart_manager, db_user_manager, db_cart_item_manager, db_product_manager
 ):
-    id_user = db_user_manager.insert_data("TestUser", "12345", "user")
+    id_user = db_user_manager.insert_data("TestUser", "TestUser@gmail.com", "12345", "user")
     id_cart = db_cart_manager.insert_data(id_user)
     id_product = db_product_manager.insert_data(
         "FD_NU_132", "nutrisource lite", 1000, 50
@@ -94,7 +94,7 @@ def base_receipt(
     db_receipt_manager,
 ):
 
-    id_user = db_user_manager.insert_data("TestUser", "12345", "user")
+    id_user = db_user_manager.insert_data("TestUser", "TestUser@gmail.com", "12345", "user")
     id_payment = db_payment_manager.insert_data(id_user, "card", "data_payment")
     id_address = db_address_manager.insert_data(id_user, "9 Oak Valley Avenue")
     id_cart = db_cart_manager.insert_data(id_user)
