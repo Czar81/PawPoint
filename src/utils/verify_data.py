@@ -21,6 +21,7 @@ def role_required(allowed_roles):
         @wraps(func)
         def wrapper(*args, **kwargs):
             token = request.headers.get("Authorization")
+            token = token.replace("Bearer ", "").strip()
             if not token:
                 return jsonify(message="Missing token"), 401
             token = token.replace("Bearer ", "")
