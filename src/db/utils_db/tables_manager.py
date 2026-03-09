@@ -50,8 +50,8 @@ class TablesManager:
         metadata_obj,
         Column("id", Integer, primary_key=True),
         Column("name", String(30), nullable=False),
-        Column("email", String(30), nullable=False)
-        Column("password", String, nullable=False),
+        Column("email", String(30), nullable=False, unique=True),
+        Column("password", String(20), nullable=False),
         Column("role", String(10), server_default="user"),
     )
     cart_table = Table(

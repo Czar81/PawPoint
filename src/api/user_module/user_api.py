@@ -15,7 +15,7 @@ register_error_handlers(user_bp)
 
 
 @user_bp.route("/register", methods=["POST"])
-@validate_fields(required=["name", "password"])
+@validate_fields(required=["name", "email", "password"])
 def register(name, email, password):
     """
     Register a new user.
@@ -35,7 +35,7 @@ def register(name, email, password):
 
 
 @user_bp.route("/login", methods=["POST"])
-@validate_fields(required=["name", "password"])
+@validate_fields(required=["email", "password"])
 def login(email, password):
     """
     Authenticate a user and return a JWT token.
