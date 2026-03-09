@@ -9,6 +9,7 @@ from src.api import (
 )
 from flask import Flask
 from dotenv import load_dotenv
+from flask_cors import CORS
 from src.extensions import tm
 from os import environ
 
@@ -16,6 +17,7 @@ load_dotenv()
 
 # Register API blueprints
 app = Flask("Store-service")
+CORS(app, origins=["http://localhost:5173"])
 
 # Register API blueprints
 if __name__ == "__main__":
