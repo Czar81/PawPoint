@@ -21,10 +21,18 @@ class JWTManager:
         :return: Encoded JWT token
         :raises ValueError: If token encoding fails
         """
-        self.private_key = environ.get("PRIVATE_KEY")
-        self.public_key = environ.get("PUBLIC_KEY")
-        if not self.private_key or not self.public_key:
-            raise ValueError("PRIVATE_KEY y PUBLIC_KEY must be defiend in .env")
+        private_key_path = environ.get("PRIVATE_KEY_PATH")
+        public_key_path = environ.get("PUBLIC_KEY_PATH")
+        if not private_key_path or not public_key_path:
+            raise ValueError("PRIVATE_KEY_PATH and PUBLIC_KEY_PATH must be defined in .env")
+        
+        try:
+            with open(str(private_key_path), "r") as f:
+                self.private_key = f.read()
+            with open(str(public_key_path), "r") as f:
+                self.public_key = f.read()
+        except Exception as e:
+            raise ValueError(f"Could not read key files: {str(e)}")
 
     def encode(self, data):
         """
