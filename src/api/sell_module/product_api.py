@@ -18,21 +18,21 @@ register_error_handlers(product_bp)
 
 @product_bp.route("/products", methods=["POST"])
 @role_required(["admin"])
-@validate_fields(required=["sku", "name", "price", "amount"])
-def register_product(id_user, role, sku, name, price, amount):
+@validate_fields(required=["sku", "name", "description", "image", "category", "price", "amount"])
+def register_product(id_user, role, sku, name, description, image, category, price, amount):
     """
     Create a new product.
     Only administrators are allowed to create products.
     """
-    id_product = db_product_manager.insert_data(sku, name, price, amount)
+    id_product = db_product_manager.insert_data(sku, name, description, image, category, price, amount)
 
     # Clear product-related cache
-    cache_manager.delete_data_with_pattern("getProducts:")
+    cache_manager.delete_data_with_pattern("getProducts:*")
     return jsonify({"id": id_product, "message": "Product created"}), 201
 
 
 @product_bp.route("/products", methods=["GET"])
-@validate_fields(optional=["id_product", "sku", "name", "price", "amount"])
+@validate_fields(optional=["id_product", "sku", "name", "description", "image", "category", "price", "amount"])
 def get_products(**filters):
     """
     Create a new product.
@@ -60,7 +60,7 @@ def get_single_product(id_product):
 
 @product_bp.route("/products/<int:id_product>", methods=["PUT"])
 @role_required(["admin"])
-@validate_fields(optional=["sku", "name", "price", "amount"])
+@validate_fields(optional=["sku", "name", "description", "image", "category", "price", "amount"])
 def update_product(id_user, role, id_product, **filters):
     """
     Update an existing product.
@@ -71,7 +71,7 @@ def update_product(id_user, role, id_product, **filters):
     key = generate_cache_key("getProduct", id=id_product)
     db_product_manager.update_data(**filters)
     cache_manager.delete_data(key)
-    cache_manager.delete_data_with_pattern("getProducts:")
+    cache_manager.delete_data_with_pattern("getProducts:*")
     return jsonify({"message": "Product Updated"}), 200
 
 
@@ -86,5 +86,5 @@ def delete_product(id_user, role, id_product):
     key = generate_cache_key("getProduct", id=id_product)
     db_product_manager.delete_data(id_product)
     cache_manager.delete_data(key)
-    cache_manager.delete_data_with_pattern("getProducts:")
+    cache_manager.delete_data_with_pattern("getProducts:*")
     return jsonify({"message": "Product Deleted"}), 200

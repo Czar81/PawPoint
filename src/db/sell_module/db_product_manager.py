@@ -19,12 +19,15 @@ class DbProductManager:
         self.product_table = TablesManager.product_table
         self.engine = TablesManager.engine
 
-    def insert_data(self, sku: str, name: str, price: int, amount: int):
+    def insert_data(self, sku: str, name: str, description: str, image: str, category: str, price: int, amount: int):
         """
         Insert a new product into the database.
 
         :param sku: Product SKU
         :param name: Product name
+        :param description: Product description
+        :param image: Product image url
+        :param category: Product category
         :param price: Product price
         :param amount: Available stock amount
         :return: Newly created product ID
@@ -32,7 +35,7 @@ class DbProductManager:
         stmt = (
             insert(self.product_table)
             .returning(self.product_table.c.id)
-            .values(sku=sku, name=name, price=price, amount=amount)
+            .values(sku=sku, name=name, description=description, image=image, category=category, price=price, amount=amount)
         )
         with self.engine.connect() as conn:
             result = conn.execute(stmt).scalar()
@@ -46,6 +49,9 @@ class DbProductManager:
         id: int | None = None,
         sku: str | None = None,
         name: str | None = None,
+        description: str | None = None,
+        image: str | None = None,
+        category: str | None = None,
         price: int | None = None,
         amount: int | None = None,
     ):
@@ -55,6 +61,9 @@ class DbProductManager:
         :param id: Product ID
         :param sku: Product SKU
         :param name: Product name
+        :param description: Product description
+        :param image: Product image url
+        :param category: Product category
         :param price: Product price
         :param amount: Product stock amount
         :return: List of matching products
@@ -74,6 +83,9 @@ class DbProductManager:
         id_product: int,
         sku: str | None = None,
         name: str | None = None,
+        description: str | None = None,
+        image: str | None = None,
+        category: str | None = None,
         price: int | None = None,
         amount: int | None = None,
     ):
@@ -84,6 +96,9 @@ class DbProductManager:
         :param id_product: Product ID
         :param sku: New SKU
         :param name: New name
+        :param description: New description
+        :param image: New image url
+        :param category: New category
         :param price: New price
         :param amount: New stock amount
         :return: True if updated successfully
