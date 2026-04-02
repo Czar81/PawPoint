@@ -5,6 +5,8 @@ from sqlalchemy import (
     Column,
     Integer,
     String,
+    Float,
+    Text,
     ForeignKey,
     CheckConstraint,
     UniqueConstraint,
@@ -98,6 +100,30 @@ class TablesManager:
         Column("id_payment", Integer, ForeignKey("payment.id", ondelete="RESTRICT")),
         Column("entry_date", String(10), server_default=str(date.today())),
         Column("state", String(10), server_default="paid"),
+    )
+    order_table = Table(
+        "orders",
+        metadata_obj,
+        Column("id", Integer, primary_key=True),
+        Column("id_user", Integer, ForeignKey("user.id", ondelete="SET NULL"), nullable=True),
+        Column("customer_name", String(100), nullable=False),
+        Column("customer_email", String(100), nullable=False),
+        Column("customer_address", Text, nullable=False),
+        Column("total", Float, nullable=False),
+        Column("entry_date", String(10), server_default=str(date.today())),
+        Column("state", String(20), server_default="paid"),
+    )
+    order_item_table = Table(
+        "order_items",
+        metadata_obj,
+        Column("id", Integer, primary_key=True),
+        Column("id_order", Integer, ForeignKey("orders.id", ondelete="CASCADE")),
+        Column("id_product", Integer, ForeignKey("product.id", ondelete="RESTRICT")),
+        Column("name", String(100), nullable=False),
+        Column("price", Float, nullable=False),
+        Column("quantity", Integer, nullable=False),
+        Column("subtotal", Float, nullable=False),
+        CheckConstraint("quantity > 0", name="chk_order_item_qty_positive"),
     )
 
     def create_tables(self):
