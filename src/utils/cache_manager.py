@@ -47,8 +47,8 @@ class CacheManager:
                 self.redis_client.set(key, list_str)
             else:
                 self.redis_client.setex(key, time_to_live, list_str)
-        except RedisError as error:
-            raise RedisError(f"An error ocurred while storing data in Redis: {error}")
+        except (RedisError, Exception) as error:
+            print(f"Redis error (store_data): {error}")
 
     def check_key(self, key: str):
         """
@@ -62,11 +62,10 @@ class CacheManager:
         """
         try:
             key_exists = self.redis_client.exists(key)
-            if key_exists:
-                return True
+            return bool(key_exists)
+        except (RedisError, Exception) as error:
+            print(f"Redis error (check_key): {error}")
             return False
-        except RedisError as error:
-            raise RedisError(f"An error ocurred while checking a key in Redis: {error}")
 
     def get_data(self, key: str):
         """
@@ -85,10 +84,10 @@ class CacheManager:
                     output = output.decode("utf-8")
                 result = loads(output)
                 return result
-            else:
-                return None
-        except RedisError as e:
-            raise RedisError(f"An error ocurred while retrieving data from Redis: {e}")
+            return None
+        except (RedisError, Exception) as error:
+            print(f"Redis error (get_data): {error}")
+            return None
 
     def delete_data(self, key: str):
         """
@@ -97,10 +96,9 @@ class CacheManager:
         :param key: Cache key
         """
         try:
-            output = self.redis_client.delete(key)
-
-        except RedisError as e:
-            raise RedisError(f"An error ocurred while deleting data from Redis: {e}")
+            self.redis_client.delete(key)
+        except (RedisError, Exception) as error:
+            print(f"Redis error (delete_data): {error}")
 
     def delete_data_with_pattern(self, pattern):
         """
@@ -113,7 +111,5 @@ class CacheManager:
         try:
             for key in self.redis_client.scan_iter(match=pattern):
                 self.redis_client.delete(key)
-        except RedisError as error:
-            raise RedisError(
-                f"An error ocurred while deleting data from Redis: {error}"
-            )
+        except (RedisError, Exception) as error:
+            print(f"Redis error (delete_data_with_pattern): {error}")
