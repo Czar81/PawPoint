@@ -5,6 +5,7 @@ from .sell_module.cart_api import cart_bp
 from .sell_module.cart_item_api import cart_items_bp
 from .sell_module.product_api import product_bp
 from .sell_module.receipt_api import receipt_bp
+from .sell_module.order_api import order_bp
 
 __all__=[
     "address_bp",
@@ -13,5 +14,6 @@ __all__=[
     "cart_bp",
     "cart_items_bp",
     "product_bp",
-    "receipt_bp"
+    "receipt_bp",
+    "order_bp"
 ]
