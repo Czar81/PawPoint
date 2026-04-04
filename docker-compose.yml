@@ -1,0 +1,27 @@
+services:
+  backend:
+    build: ./
+    container_name: python_api
+    ports:
+      - "${PORT_API}:${PORT_API}"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    restart: always
+
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  db_data:
