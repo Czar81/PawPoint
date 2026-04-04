@@ -8,7 +8,6 @@ from src.db import (
     DbCartManager,
     DbProductManager,
     DbReceiptManager,
-    DbOrderManager,
     TablesManager
 )
 
@@ -21,6 +20,5 @@ db_cart_manager = DbCartManager(tm)
 db_cart_item_manager = DbCartItemsManager(tm)
 db_product_manager=DbProductManager(tm)
 db_receipt_manager=DbReceiptManager(tm)
-db_order_manager=DbOrderManager(tm)
 cache_manager = CacheManager()
 jwt_manager = JWTManager()

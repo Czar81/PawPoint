@@ -6,7 +6,6 @@ from src.api import (
     product_bp,
     receipt_bp,
     cart_items_bp,
-    order_bp,
 )
 from flask import Flask
 from dotenv import load_dotenv
@@ -33,7 +32,6 @@ if __name__ == "__main__":
     app.register_blueprint(cart_items_bp)
     app.register_blueprint(cart_bp)
     app.register_blueprint(receipt_bp)
-    app.register_blueprint(order_bp)
     app.run(
         host=environ.get("HOST_API"),
         port=environ.get("PORT_API"),
