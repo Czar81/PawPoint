@@ -50,7 +50,7 @@ PyJWT==2.10.1
 pytest==8.3.5
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.0
-pywin32==311
+pywin32==311; platform_system == "Windows"
 pyzmq==26.3.0
 redis==5.2.1
 referencing==0.35.1
