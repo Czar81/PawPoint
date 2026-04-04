@@ -25,7 +25,7 @@ class TablesManager:
     all tables in the database.
     """
 
-    def __init__(self, url=environ.get("URL_POSTGRES")):
+    def __init__(self, url=environ.get("URL_DB")):
         """
         Initialize the database engine.
 
