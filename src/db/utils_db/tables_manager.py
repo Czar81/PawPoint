@@ -108,6 +108,7 @@ class TablesManager:
         Column("id_user", Integer, ForeignKey("user.id", ondelete="SET NULL"), nullable=True),
         Column("customer_name", String(100), nullable=False),
         Column("customer_email", String(100), nullable=False),
+        Column("customer_phone", String(20), nullable=True),
         Column("customer_address", Text, nullable=False),
         Column("total", Float, nullable=False),
         Column("entry_date", String(10), server_default=str(date.today())),

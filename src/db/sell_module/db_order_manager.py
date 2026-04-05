@@ -35,6 +35,7 @@ class DbOrderManager:
                     id_user=id_user,
                     customer_name=customer["name"],
                     customer_email=customer["email"],
+                    customer_phone=customer.get("phone"),
                     customer_address=customer["address"],
                     total=total,
                 )

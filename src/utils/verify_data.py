@@ -57,7 +57,10 @@ def validate_fields(required=None, optional=None):
             if not required_fields and not optional_fields:
                 return func(*args, **kwargs)
 
-            data = request.get_json(silent=True) or {}
+            if request.method == "GET":
+                data = request.args.to_dict()
+            else:
+                data = request.get_json(silent=True) or {}
 
             if required_fields:
                 if not data:
