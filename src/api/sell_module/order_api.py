@@ -58,6 +58,17 @@ def create_order():
             total=total,
             id_user=id_user,
         )
+        
+        # Send confirmation email
+        from src.utils.email_utils import send_order_confirmation
+        send_order_confirmation(
+            customer_email=customer["email"],
+            customer_name=customer["name"],
+            order_id=id_order,
+            products=products,
+            total=total
+        )
+        
         return jsonify(message="Order registered", id=id_order), 201
     except Exception as e:
         return jsonify(error=str(e)), 500
