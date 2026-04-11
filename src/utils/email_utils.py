@@ -28,7 +28,7 @@ def send_order_confirmation(customer_email, customer_name, order_id, products, t
 
     # Create HTML content
     items_html = "".join([
-        f"<li>{item['name']} x {item['quantity']} - ${item['subtotal']}</li>"
+        f"<li>{item['name']} x {item['quantity']} - ₡{item['subtotal']}</li>"
         for item in products
     ])
 
@@ -41,7 +41,7 @@ def send_order_confirmation(customer_email, customer_name, order_id, products, t
         <ul>
             {items_html}
         </ul>
-        <p><strong>Total: ${total}</strong></p>
+        <p><strong>Total: ₡{total}</strong></p>
         <hr>
         <p>If you have any questions, please contact us at support@pawstore.com</p>
         <p>Best regards,<br>The PawStore Team</p>
